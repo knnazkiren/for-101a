@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Food Voucher - BSINFOTECH 101A</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #2b1b3d;
+  color: #fff8e7;
+  font-family: system-ui, sans-serif;
+  text-align: center;
+}
+.wrap { max-width: 420px; width: 100%; }
+.ticket {
+  background: #f5c518;
+  color: #2b1b3d;
+  border-radius: 18px;
+  padding: 32px 24px;
+  transform: rotate(-2deg);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+h1 { font-size: 2.2rem; line-height: 1.1; margin: 0 0 10px; }
+p { margin: 0 0 20px; }
+button {
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 12px;
+  background: #2b1b3d;
+  color: #f5c518;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bar {
+  display: none;
+  height: 10px;
+  margin-top: 16px;
+  background: rgba(43, 27, 61, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.bar div { width: 0; height: 100%; background: #3ddc97; }
+#message { margin-top: 10px; min-height: 1.3em; }
+.note { margin-top: 24px; font-size: 0.8rem; opacity: 0.6; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="ticket">
+    <h1>Free food for BSINFOTECH 101A!</h1>
+    <p>Class treat! Tap below to verify you're in section 101A and claim your free meal voucher.</p>
+    <button id="claim">Claim my free food</button>
+    <div class="bar"><div></div></div>
+    <div id="message"></div>
+  </div>
+  <p class="note">Only 3 vouchers left. Don't share this link outside 101A.</p>
+</main>
+<script>
+const url = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdyM2FvNzI3d2hkdzExYjR3dGFnN2VsanVoZWt4bGY0eGF5YzNuYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/lgcUUCXgC8mEo/giphy.gif";
+const steps = [
+  "Checking your section (101A)...",
+  "Asking the canteen nicely...",
+  "Printing meal voucher...",
+  "Almost there..."
+];
+
+const button = document.getElementById("claim");
+const bar = document.querySelector(".bar");
+const fill = bar.firstElementChild;
+const message = document.getElementById("message");
+
+button.addEventListener("click", () => {
+  button.disabled = true;
+  button.textContent = "Verifying...";
+  bar.style.display = "block";
+
+  let progress = 0;
+  const timer = setInterval(() => {
+    progress += 4;
+    fill.style.width = progress + "%";
+    message.textContent = steps[Math.min(Math.floor(progress / 26), steps.length - 1)];
+
+    if (progress >= 100) {
+      clearInterval(timer);
+      location.href = url;
+    }
+  }, 120);
+});
+</script>
+</body>
+</html>
